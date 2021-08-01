@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='plyr.css') }}"
+    />
+  </head>
+  <body>
+    <form action="{{ url_for('feed') }}" method="POST" enctype="multipart/form-data">
+      <label for="file">Upload Video:</label>
+      <input type="file" id="file" name="file" accept="video/*">
+      <input type="submit">
+    </form>
+  </body>
+</html>
