@@ -8,14 +8,19 @@ class VideoCamera(object):
     def __del__(self):
         self.video.release()
 
+    # initialize a static variable to store the frame number
+    frame_num = 0
+
     def get_frame(self):
         while self.video.isOpened():
-            ret, frame = self.video.read()
+            video_ret, frame = self.video.read()
 
-            # DO WHAT YOU WANT WITH TENSORFLOW / KERAS AND OPENCV
+            # use our model to detect the number of vehicles
 
-            ret, jpeg = cv2.imencode('.jpg', frame)
+            if video_ret:
+                self.frame_num += 1
 
-            return jpeg.tobytes()
+                img_ret, jpeg = cv2.imencode('.jpg', frame)
+                return jpeg.tobytes(), self.frame_num
 
 

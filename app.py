@@ -28,9 +28,21 @@ def generate(filename: str):
     return Response(generate_video(video_stream), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
+@app.route('/analyze/<string:filename>')
+def analyze(filename: str):
+    video_stream = VideoCamera(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    return Response(analyze_video(video_stream), mimetype='text/html')
+
+
 def generate_video(camera):
     while True:
-        frame = camera.get_frame()
+        frame, _ = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+
+def analyze_video(camera):
+    while True:
+        _, frame_num = camera.get_frame()
+        yield str(frame_num) + '<br/>\n'
 

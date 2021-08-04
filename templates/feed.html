@@ -7,6 +7,6 @@
   </head>
   <body>
       <img src="{{ url_for('generate', filename=filename) }}" />
-      <a href="{{ url_for('analyze', filename=filename) }}"></a>
+      <iframe src="{{ url_for('analyze', filename=filename) }}"></iframe>
   </body>
 </html>
